@@ -22,14 +22,12 @@ public class FileService {
     public Path uploadFile(MultipartFile file) {
         Path copyLocation;
         try {
-             copyLocation = Paths
-                .get(uploadDir + File.separator + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
+            copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new FileStorageException("Could not store file " + file.getOriginalFilename()
-                + ". Please try again!");
+            throw new FileStorageException(String.format("Could not store file %s. Please try again!", file.getOriginalFilename()));
         }
+
         return copyLocation.toAbsolutePath();
     }
 }

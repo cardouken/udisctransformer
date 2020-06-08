@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.file.Path;
+
 @Controller
 public class UploadController {
 
@@ -29,7 +31,8 @@ public class UploadController {
 
     @PostMapping("/add-file")
     public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        fileService.uploadFile(file);
+        Path path = fileService.uploadFile(file);
+        importService.importFromCsv(path);
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");

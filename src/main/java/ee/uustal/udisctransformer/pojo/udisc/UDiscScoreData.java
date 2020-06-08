@@ -8,6 +8,7 @@ public class UDiscScoreData {
     private int totalThrowsAmount;
     @CsvBindByName(column = "+/-")
     private int throwsVsPar;
+    @CsvBindByName(capture = "Hole*")
     private int[] hole;
 
     public int getTotalThrowsAmount() {

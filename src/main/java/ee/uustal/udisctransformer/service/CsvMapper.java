@@ -1,7 +1,8 @@
 package ee.uustal.udisctransformer.service;
 
+import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBeanBuilder;
-import ee.uustal.udisctransformer.configuration.BeanNameFieldVerified;
+import ee.uustal.udisctransformer.configuration.BeanNameVerifier;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscDataHolder;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,10 @@ import java.util.List;
 @Service
 public class CsvMapper {
 
-    private final BeanNameFieldVerified beanNameFieldVerified;
+    private final BeanNameVerifier beanNameVerifier;
 
-    public CsvMapper(BeanNameFieldVerified beanNameFieldVerified) {
-        this.beanNameFieldVerified = beanNameFieldVerified;
+    public CsvMapper(BeanNameVerifier beanNameVerifier) {
+        this.beanNameVerifier = beanNameVerifier;
     }
 
     public void mapCsvToObject(Path path) {
@@ -25,9 +26,10 @@ public class CsvMapper {
         try {
             uDiscDataHolderList = new CsvToBeanBuilder<UDiscDataHolder>(new FileReader(path.toFile()))
                     .withType(UDiscDataHolder.class)
-                    .withVerifier(beanNameFieldVerified)
+                    .withVerifier(beanNameVerifier)
                     .build()
                     .parse();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

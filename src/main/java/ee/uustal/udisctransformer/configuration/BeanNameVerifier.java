@@ -5,7 +5,7 @@ import ee.uustal.udisctransformer.pojo.udisc.UDiscDataHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BeanNameFieldVerified implements BeanVerifier<UDiscDataHolder> {
+public class BeanNameVerifier implements BeanVerifier<UDiscDataHolder> {
 
     @Override
     public boolean verifyBean(UDiscDataHolder bean) {
