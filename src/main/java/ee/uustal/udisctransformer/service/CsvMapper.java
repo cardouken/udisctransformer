@@ -1,13 +1,17 @@
 package ee.uustal.udisctransformer.service;
 
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBeanBuilder;
-import ee.uustal.udisctransformer.configuration.BeanNameVerifier;
-import ee.uustal.udisctransformer.pojo.udisc.UDiscDataHolder;
+import ee.uustal.udisctransformer.pojo.udisc.ParseUDiscScoreData;
+import ee.uustal.udisctransformer.pojo.udisc.PlayerHoleScore;
+import ee.uustal.udisctransformer.pojo.udisc.UDiscPlayerData;
 import org.springframework.stereotype.Service;
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.dozer.CsvDozerBeanReader;
+import org.supercsv.io.dozer.ICsvDozerBeanReader;
+import org.supercsv.prefs.CsvPreference;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +19,42 @@ import java.util.List;
 @Service
 public class CsvMapper {
 
-    private final BeanNameVerifier beanNameVerifier;
-
-    public CsvMapper(BeanNameVerifier beanNameVerifier) {
-        this.beanNameVerifier = beanNameVerifier;
-    }
+    private static final int HOLE_START_INDEX = 6;
+    private static final int DATA_END_INDEX = 4;
 
     public void mapCsvToObject(Path path) {
-        List<UDiscDataHolder> uDiscDataHolderList = new ArrayList<>();
-        try {
-            uDiscDataHolderList = new CsvToBeanBuilder<UDiscDataHolder>(new FileReader(path.toFile()))
-                    .withType(UDiscDataHolder.class)
-                    .withVerifier(beanNameVerifier)
-                    .build()
-                    .parse();
+        try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(path.toFile()), CsvPreference.STANDARD_PREFERENCE)) {
 
-        } catch (FileNotFoundException e) {
+            final String[] header = beanReader.getHeader(true);
+            final String[] fieldMapping = new String[header.length];
+            final CellProcessor[] processors = new CellProcessor[header.length];
+            final Class<?>[] hintTypes = new Class<?>[header.length];
+
+            for (int i = 0; i < header.length; i++) {
+                if (i < DATA_END_INDEX) {
+                    fieldMapping[i] = header[i];
+                }
+                if (i >= HOLE_START_INDEX) {
+                    fieldMapping[i] = String.format("playerHoleScores[%d]", i - HOLE_START_INDEX);
+                    processors[i] = new Optional(new ParseUDiscScoreData(header));
+                    hintTypes[i] = PlayerHoleScore.class;
+                }
+            }
+
+            beanReader.configureBeanMapping(UDiscPlayerData.class, fieldMapping, hintTypes);
+
+            List<UDiscPlayerData> UDiscPlayerDataList = new ArrayList<>();
+            UDiscPlayerData uDiscPlayerData;
+            while ((uDiscPlayerData = beanReader.read(UDiscPlayerData.class, processors)) != null) {
+                if (!"Par".equals(uDiscPlayerData.getPlayerName())) {
+                    UDiscPlayerDataList.add(uDiscPlayerData);
+                }
+            }
+
+            System.out.println(UDiscPlayerDataList);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println(uDiscDataHolderList);
     }
 }
