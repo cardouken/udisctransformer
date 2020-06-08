@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://thymeleaf.org " lang="en">
+<body>
+<h1>UDisc CSV uploader</h1>
+<hr/>
+<h4>Upload exported CSV</h4>
+<form method="POST" th:action="@{/add-file}" enctype="multipart/form-data">
+    <input type="file" name="file"/> <br/><br/>
+    <button type="submit">Upload</button>
+</form>
+<hr/>
+<div th:if="${message}">
+    <h2 th:text="${message}"></h2>
+</div>
+</body>
+</html>
