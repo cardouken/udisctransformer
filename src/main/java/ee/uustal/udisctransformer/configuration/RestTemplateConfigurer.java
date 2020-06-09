@@ -1,5 +1,6 @@
 package ee.uustal.udisctransformer.configuration;
 
+import ee.uustal.udisctransformer.service.http.CookieHandlingClientHttpRequestInterceptor;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -27,6 +28,7 @@ public class RestTemplateConfigurer {
         factory.setReadTimeout(readTimeout);
 
         restTemplate.setRequestFactory(factory);
+        restTemplate.getInterceptors().add(new CookieHandlingClientHttpRequestInterceptor());
 
         restTemplate.getMessageConverters().add(new ByteArrayHttpMessageConverter());
         restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());

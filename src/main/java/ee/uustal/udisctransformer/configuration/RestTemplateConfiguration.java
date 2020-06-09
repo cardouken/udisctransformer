@@ -10,7 +10,6 @@ public class RestTemplateConfiguration {
 
     @Bean
     public RestTemplate discGolfMetrixRestTemplate(RestTemplateBuilder restTemplateBuilder) {
-
         RestTemplateConfigurer.RestPackage restPackage = RestTemplateConfigurer.configure(
                 restTemplateBuilder.build(),
                 100,
@@ -22,5 +21,4 @@ public class RestTemplateConfiguration {
 
         return restPackage.getRestTemplate();
     }
-
 }

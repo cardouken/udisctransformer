@@ -49,6 +49,7 @@ public class DiscGolfMetrixHttpClient {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
         ResponseEntity<String> exchange = discGolfMetrixRestTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
 
@@ -64,17 +65,16 @@ public class DiscGolfMetrixHttpClient {
         }
     }
 
-    public void addPlayers(String id, AddPlayersRequest request) {
+    public void addPlayers(AddPlayersRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(discGolfMetrixProperties.getUsername(), discGolfMetrixProperties.getPassword());
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add("Cookie", "PHPSESSID=11rg46jn2pvntn263kcl6bib00");
         URIBuilder uriBuilder;
         URI url = null;
 
         try {
             uriBuilder = new URIBuilder(discGolfMetrixProperties.getUri() + "?u=competition_add_player2&back=competition_start_players&selected_group=0&");
-            uriBuilder.addParameter("ID", id);
+            uriBuilder.addParameter("ID", request.getId());
 
             url = uriBuilder.build();
 
@@ -87,7 +87,7 @@ public class DiscGolfMetrixHttpClient {
         body.add("addPlayer", request.getAddPlayer());
 
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(body, headers);
-        ResponseEntity<String> exchange = discGolfMetrixRestTemplate.postForEntity(url, httpEntity, String.class);
+        ResponseEntity<String> exchange = discGolfMetrixRestTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 
         if (!exchange.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException(
