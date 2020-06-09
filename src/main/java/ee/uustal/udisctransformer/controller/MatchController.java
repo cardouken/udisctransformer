@@ -33,7 +33,7 @@ public class MatchController {
     }
 
     @GetMapping("/getbydate")
-    public List<UDiscMatchData> getMatchByDate(String date) {
-        return matchService.getMatchByDate(date);
+    public List<UDiscMatchData> getMatchByTimestamp(@RequestParam long timestamp) {
+        return matchService.getMatchByTimestamp(timestamp);
     }
 }

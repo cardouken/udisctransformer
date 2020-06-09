@@ -26,7 +26,7 @@ public class MatchService {
     public List<UDiscMatchData> importFromCsv(MultipartFile file) {
         Path path = fileService.uploadFile(file);
         List<UDiscMatchData> uDiscMatchDataList = csvMapper.mapCsvToObject(path);
-        uDiscMatchDao.updateMany(uDiscMatchDataList);
+        uDiscMatchDao.insertMany(uDiscMatchDataList);
 
         return uDiscMatchDataList;
     }
@@ -35,7 +35,8 @@ public class MatchService {
         return uDiscMatchDao.getByPlayerName(playerName);
     }
 
-    public List<UDiscMatchData> getMatchByDate(String date) {
-        return uDiscMatchDao.getByDate(date);
+    public List<UDiscMatchData> getMatchByTimestamp(long timestamp) {
+        return uDiscMatchDao.getByTimestamp(timestamp);
     }
+
 }

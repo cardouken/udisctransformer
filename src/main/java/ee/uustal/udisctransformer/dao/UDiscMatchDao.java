@@ -4,19 +4,15 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import com.mongodb.client.model.UpdateOptions;
 import ee.uustal.udisctransformer.database.MongoService;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
-import static com.mongodb.client.model.Updates.setOnInsert;
 import static ee.uustal.udisctransformer.database.MongoUtility.asList;
 
 @Repository
@@ -38,14 +34,8 @@ public class UDiscMatchDao {
         );
     }
 
-    public void updateMany(List<UDiscMatchData> uDiscMatchDataList) {
+    public void insertMany(List<UDiscMatchData> uDiscMatchDataList) {
         collection.insertMany(uDiscMatchDataList);
-    }
-
-    public UDiscMatchData get(ObjectId userId) {
-        return collection.find(
-                eq("_id", userId)
-        ).first();
     }
 
     public List<UDiscMatchData> getByPlayerName(String playerName) {
@@ -56,9 +46,9 @@ public class UDiscMatchDao {
         return asList(cursor);
     }
 
-    public List<UDiscMatchData> getByDate(String date) {
+    public List<UDiscMatchData> getByTimestamp(long timestamp) {
         MongoCursor<UDiscMatchData> cursor = collection.find(
-                eq("date", date)
+                eq("date", new Date(timestamp))
         ).iterator();
 
         return asList(cursor);
