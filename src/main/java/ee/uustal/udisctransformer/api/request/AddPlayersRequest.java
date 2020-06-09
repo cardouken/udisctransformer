@@ -4,20 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddPlayersRequest {
 
-    @JsonProperty("SelectedUserId")
-    private String selectedUserId;
     @JsonProperty("player_name")
     private String playerName;
     private String addPlayer;
-
-    public String getSelectedUserId() {
-        return selectedUserId;
-    }
-
-    public AddPlayersRequest setSelectedUserId(String selectedUserId) {
-        this.selectedUserId = selectedUserId;
-        return this;
-    }
 
     public String getPlayerName() {
         return playerName;
