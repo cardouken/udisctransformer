@@ -1,11 +1,11 @@
 package ee.uustal.udisctransformer.service;
 
-import ee.uustal.udisctransformer.dao.UDiscMatchDao;
 import ee.uustal.udisctransformer.pojo.udisc.ParseUDiscScoreData;
 import ee.uustal.udisctransformer.pojo.udisc.PlayerScores;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
 import org.springframework.stereotype.Service;
 import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.dozer.CsvDozerBeanReader;
 import org.supercsv.io.dozer.ICsvDozerBeanReader;
@@ -30,6 +30,7 @@ public class CsvMapper {
             final String[] header = beanReader.getHeader(true);
             final String[] fieldMapping = new String[header.length];
             final CellProcessor[] processors = new CellProcessor[header.length];
+            processors[3] = new ParseDate("yyyy-MM-dd HH:mm");
             final Class<?>[] hintTypes = new Class<?>[header.length];
 
             for (int i = 0; i < header.length; i++) {

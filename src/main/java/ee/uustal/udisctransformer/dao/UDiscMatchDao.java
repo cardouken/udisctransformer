@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
+import com.mongodb.client.model.UpdateOptions;
 import ee.uustal.udisctransformer.database.MongoService;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
 import org.bson.types.ObjectId;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+import static com.mongodb.client.model.Updates.setOnInsert;
 import static ee.uustal.udisctransformer.database.MongoUtility.asList;
 
 @Repository
@@ -26,10 +30,10 @@ public class UDiscMatchDao {
         this.collection = database.getCollection("UDiscMatchData", UDiscMatchData.class);
     }
 
-    public void save(UDiscMatchData u) {
+    public void save(UDiscMatchData matchData) {
         collection.replaceOne(
-                eq("_id", u.getId()),
-                u,
+                eq("_id", matchData.getMatchId()),
+                matchData,
                 new ReplaceOptions().upsert(true)
         );
     }
@@ -47,6 +51,14 @@ public class UDiscMatchDao {
     public List<UDiscMatchData> getByPlayerName(String playerName) {
         MongoCursor<UDiscMatchData> cursor = collection.find(
                 eq("playerName", playerName)
+        ).iterator();
+
+        return asList(cursor);
+    }
+
+    public List<UDiscMatchData> getByDate(String date) {
+        MongoCursor<UDiscMatchData> cursor = collection.find(
+                eq("date", date)
         ).iterator();
 
         return asList(cursor);

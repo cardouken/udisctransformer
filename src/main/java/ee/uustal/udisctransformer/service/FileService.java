@@ -16,7 +16,7 @@ import java.util.Objects;
 @Service
 public class FileService {
 
-    @Value("${app.upload.dir:${user.home}/Desktop}")
+    @Value("${app.upload.dir:${user.home}}")
     public String uploadDir;
 
     public Path uploadFile(MultipartFile file) {

@@ -2,23 +2,24 @@ package ee.uustal.udisctransformer.pojo.udisc;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
 import java.util.List;
 
 public class UDiscMatchData {
 
-    private ObjectId id;
+    private ObjectId matchId;
     private String playerName;
     private String courseName;
     private String layoutName;
-    private String date;
+    private Date date;
     private List<PlayerScores> playerHoleScores;
 
-    public ObjectId getId() {
-        return id;
+    public ObjectId getMatchId() {
+        return matchId;
     }
 
-    public UDiscMatchData setId(ObjectId id) {
-        this.id = id;
+    public UDiscMatchData setMatchId(ObjectId matchId) {
+        this.matchId = matchId;
         return this;
     }
 
@@ -49,11 +50,11 @@ public class UDiscMatchData {
         return this;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public UDiscMatchData setDate(String date) {
+    public UDiscMatchData setDate(Date date) {
         this.date = date;
         return this;
     }
