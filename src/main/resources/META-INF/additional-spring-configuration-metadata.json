@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "backend.database.connection-string",
+      "type": "java.lang.String",
+      "description": "Description for backend.database.connection-string."
+    },
+    {
+      "name": "backend.database.password",
+      "type": "java.lang.String",
+      "description": "Description for backend.database.password."
+    },
+    {
+      "name": "backend.database.username",
+      "type": "java.lang.String",
+      "description": "Description for backend.database.username."
+    },
+    {
+      "name": "backend.database.name",
+      "type": "java.lang.String",
+      "description": "Description for backend.database.name."
+    }
+  ] }

@@ -1,6 +1,5 @@
 package ee.uustal.udisctransformer.service;
 
-import ee.uustal.udisctransformer.api.request.GetPlayerRequest;
 import ee.uustal.udisctransformer.dao.UDiscMatchDao;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
 import org.springframework.stereotype.Service;

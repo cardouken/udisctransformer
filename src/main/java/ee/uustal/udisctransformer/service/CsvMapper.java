@@ -23,12 +23,6 @@ public class CsvMapper {
     private static final int HOLE_START_INDEX = 6;
     private static final int DATA_END_INDEX = 4;
 
-    private final UDiscMatchDao uDiscMatchDao;
-
-    public CsvMapper(UDiscMatchDao uDiscMatchDao) {
-        this.uDiscMatchDao = uDiscMatchDao;
-    }
-
     public List<UDiscMatchData> mapCsvToObject(Path path) {
         List<UDiscMatchData> uDiscMatchDataList = new ArrayList<>();
         try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(path.toFile()), CsvPreference.STANDARD_PREFERENCE)) {

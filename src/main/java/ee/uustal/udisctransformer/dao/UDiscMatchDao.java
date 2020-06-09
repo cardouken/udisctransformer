@@ -4,7 +4,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import com.mongodb.client.model.UpdateOptions;
 import ee.uustal.udisctransformer.database.MongoService;
 import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
 import org.bson.types.ObjectId;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
 import static ee.uustal.udisctransformer.database.MongoUtility.asList;
 
 @Repository
