@@ -1,8 +1,9 @@
 package ee.uustal.udisctransformer.service;
 
+import ee.uustal.udisctransformer.dao.UDiscMatchDao;
 import ee.uustal.udisctransformer.pojo.udisc.ParseUDiscScoreData;
-import ee.uustal.udisctransformer.pojo.udisc.PlayerHoleScore;
-import ee.uustal.udisctransformer.pojo.udisc.UDiscPlayerData;
+import ee.uustal.udisctransformer.pojo.udisc.PlayerScores;
+import ee.uustal.udisctransformer.pojo.udisc.UDiscMatchData;
 import org.springframework.stereotype.Service;
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -22,7 +23,14 @@ public class CsvMapper {
     private static final int HOLE_START_INDEX = 6;
     private static final int DATA_END_INDEX = 4;
 
-    public void mapCsvToObject(Path path) {
+    private final UDiscMatchDao uDiscMatchDao;
+
+    public CsvMapper(UDiscMatchDao uDiscMatchDao) {
+        this.uDiscMatchDao = uDiscMatchDao;
+    }
+
+    public List<UDiscMatchData> mapCsvToObject(Path path) {
+        List<UDiscMatchData> uDiscMatchDataList = new ArrayList<>();
         try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(path.toFile()), CsvPreference.STANDARD_PREFERENCE)) {
 
             final String[] header = beanReader.getHeader(true);
@@ -37,24 +45,24 @@ public class CsvMapper {
                 if (i >= HOLE_START_INDEX) {
                     fieldMapping[i] = String.format("playerHoleScores[%d]", i - HOLE_START_INDEX);
                     processors[i] = new Optional(new ParseUDiscScoreData(header));
-                    hintTypes[i] = PlayerHoleScore.class;
+                    hintTypes[i] = PlayerScores.class;
                 }
             }
 
-            beanReader.configureBeanMapping(UDiscPlayerData.class, fieldMapping, hintTypes);
+            beanReader.configureBeanMapping(UDiscMatchData.class, fieldMapping, hintTypes);
 
-            List<UDiscPlayerData> UDiscPlayerDataList = new ArrayList<>();
-            UDiscPlayerData uDiscPlayerData;
-            while ((uDiscPlayerData = beanReader.read(UDiscPlayerData.class, processors)) != null) {
-                if (!"Par".equals(uDiscPlayerData.getPlayerName())) {
-                    UDiscPlayerDataList.add(uDiscPlayerData);
+
+            UDiscMatchData uDiscMatchData;
+            while ((uDiscMatchData = beanReader.read(UDiscMatchData.class, processors)) != null) {
+                if (!"Par".equals(uDiscMatchData.getPlayerName())) {
+                    uDiscMatchDataList.add(uDiscMatchData);
                 }
             }
-
-            System.out.println(UDiscPlayerDataList);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return uDiscMatchDataList;
     }
 }

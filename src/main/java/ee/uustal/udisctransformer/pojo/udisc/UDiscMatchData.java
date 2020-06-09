@@ -1,20 +1,32 @@
 package ee.uustal.udisctransformer.pojo.udisc;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
-public class UDiscPlayerData {
+public class UDiscMatchData {
 
+    private ObjectId id;
     private String playerName;
     private String courseName;
     private String layoutName;
     private String date;
-    private List<PlayerHoleScore> playerHoleScores;
+    private List<PlayerScores> playerHoleScores;
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public UDiscMatchData setId(ObjectId id) {
+        this.id = id;
+        return this;
+    }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public UDiscPlayerData setPlayerName(String playerName) {
+    public UDiscMatchData setPlayerName(String playerName) {
         this.playerName = playerName;
         return this;
     }
@@ -23,7 +35,7 @@ public class UDiscPlayerData {
         return courseName;
     }
 
-    public UDiscPlayerData setCourseName(String courseName) {
+    public UDiscMatchData setCourseName(String courseName) {
         this.courseName = courseName;
         return this;
     }
@@ -32,7 +44,7 @@ public class UDiscPlayerData {
         return layoutName;
     }
 
-    public UDiscPlayerData setLayoutName(String layoutName) {
+    public UDiscMatchData setLayoutName(String layoutName) {
         this.layoutName = layoutName;
         return this;
     }
@@ -41,16 +53,16 @@ public class UDiscPlayerData {
         return date;
     }
 
-    public UDiscPlayerData setDate(String date) {
+    public UDiscMatchData setDate(String date) {
         this.date = date;
         return this;
     }
 
-    public List<PlayerHoleScore> getPlayerHoleScores() {
+    public List<PlayerScores> getPlayerHoleScores() {
         return playerHoleScores;
     }
 
-    public UDiscPlayerData setPlayerHoleScores(List<PlayerHoleScore> playerHoleScores) {
+    public UDiscMatchData setPlayerHoleScores(List<PlayerScores> playerHoleScores) {
         this.playerHoleScores = playerHoleScores;
         return this;
     }

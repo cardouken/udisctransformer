@@ -1,17 +1,17 @@
 package ee.uustal.udisctransformer.pojo.udisc;
 
-public class PlayerHoleScore {
+public class PlayerScores {
 
-    private UDiscPlayerData UDiscPlayerData;
+    private UDiscMatchData UDiscMatchData;
     private String holeNameNumber;
     private String holeScore;
 
-    public UDiscPlayerData getUDiscPlayerData() {
-        return UDiscPlayerData;
+    public UDiscMatchData getUDiscMatchData() {
+        return UDiscMatchData;
     }
 
-    public PlayerHoleScore setUDiscPlayerData(UDiscPlayerData UDiscPlayerData) {
-        this.UDiscPlayerData = UDiscPlayerData;
+    public PlayerScores setUDiscMatchData(UDiscMatchData UDiscMatchData) {
+        this.UDiscMatchData = UDiscMatchData;
         return this;
     }
 
@@ -19,7 +19,7 @@ public class PlayerHoleScore {
         return holeNameNumber;
     }
 
-    public PlayerHoleScore setHoleNameNumber(String holeNameNumber) {
+    public PlayerScores setHoleNameNumber(String holeNameNumber) {
         this.holeNameNumber = holeNameNumber;
         return this;
     }
@@ -28,7 +28,7 @@ public class PlayerHoleScore {
         return holeScore;
     }
 
-    public PlayerHoleScore setHoleScore(String holeScore) {
+    public PlayerScores setHoleScore(String holeScore) {
         this.holeScore = holeScore;
         return this;
     }

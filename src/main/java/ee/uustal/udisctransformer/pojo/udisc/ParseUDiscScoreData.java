@@ -16,7 +16,7 @@ public class ParseUDiscScoreData extends CellProcessorAdaptor {
         if (value == null) {
             return null;
         }
-        return new PlayerHoleScore()
+        return new PlayerScores()
                 .setHoleNameNumber(header[context.getColumnNumber() - 1])
                 .setHoleScore(value.toString());
 
