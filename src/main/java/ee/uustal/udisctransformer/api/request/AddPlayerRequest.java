@@ -2,7 +2,7 @@ package ee.uustal.udisctransformer.api.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddPlayersRequest {
+public class AddPlayerRequest {
 
     private String id;
     @JsonProperty("player_name")
@@ -13,7 +13,7 @@ public class AddPlayersRequest {
         return id;
     }
 
-    public AddPlayersRequest setId(String id) {
+    public AddPlayerRequest setId(String id) {
         this.id = id;
         return this;
     }
@@ -22,7 +22,7 @@ public class AddPlayersRequest {
         return playerName;
     }
 
-    public AddPlayersRequest setPlayerName(String playerName) {
+    public AddPlayerRequest setPlayerName(String playerName) {
         this.playerName = playerName;
         return this;
     }
@@ -31,7 +31,7 @@ public class AddPlayersRequest {
         return addPlayer;
     }
 
-    public AddPlayersRequest setAddPlayer(String addPlayer) {
+    public AddPlayerRequest setAddPlayer(String addPlayer) {
         this.addPlayer = addPlayer;
         return this;
     }

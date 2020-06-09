@@ -35,7 +35,7 @@ public class CookieHandlingClientHttpRequestInterceptor implements ClientHttpReq
         List<String> newCookies = response.getHeaders().get(HttpHeaders.SET_COOKIE);
         if (newCookies != null) {
             List<HttpCookie> parsedCookies = newCookies.stream()
-                    .flatMap(rawCookie -> HttpCookie.parse(HttpHeaders.COOKIE + ": " + rawCookie).stream())
+                    .flatMap(rawCookie -> HttpCookie.parse(HttpHeaders.SET_COOKIE + ": " + rawCookie).stream())
                     .collect(Collectors.toList());
 
             LOG.info("Extracted cookies from response: {}", parsedCookies);

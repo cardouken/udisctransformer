@@ -1,6 +1,6 @@
 package ee.uustal.udisctransformer.controller;
 
-import ee.uustal.udisctransformer.api.request.AddPlayersRequest;
+import ee.uustal.udisctransformer.api.request.AddPlayerRequest;
 import ee.uustal.udisctransformer.api.request.CreateMatchRequest;
 import ee.uustal.udisctransformer.service.http.DiscGolfMetrixHttpClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +21,8 @@ public class MetrixController {
     }
 
     @PostMapping("/add-player")
-    public void addPlayer(AddPlayersRequest request) {
-        discGolfMetrixHttpClient.addPlayers(request);
+    public void addPlayer(AddPlayerRequest request) {
+        discGolfMetrixHttpClient.addPlayer(request);
     }
 
 }
